@@ -26,6 +26,17 @@ def test_unknown_domain_is_general(tmp_path):
 def test_user_skill_is_discovered_dynamically(tmp_path):
     skill = tmp_path / "skills" / "photography-helper"
     skill.mkdir(parents=True)
-    (skill / "SKILL.md").write_text("---\nname: photography-helper\ndescription: photography workflow\n---\n", encoding="utf-8")
+    (skill / "SKILL.md").write_text("---\nname: photography-helper\ndescription: photography workflow\nkeywords: [摄影, photo]\n---\n", encoding="utf-8")
     result = json.loads(run("设计一个摄影项目", tmp_path).stdout)
     assert "photography-helper" in result["selected_skills"]
+
+
+def test_memory_is_scope_isolated(tmp_path):
+    memory = tmp_path / "personal-agent-system" / "memory"
+    memory.mkdir(parents=True)
+    (memory / "rules.yaml").write_text(
+        "version: 1\nrecords:\n  - id: math-only\n    scope: mathematics\n    rule: use stacked notation\n    evidence: checked\n    status: validated\n    owner: math-skill\n    last_verified: '2026-09-13'\n",
+        encoding="utf-8",
+    )
+    result = json.loads(run("设计一个摄影项目", tmp_path).stdout)
+    assert result["memory_records"] == []

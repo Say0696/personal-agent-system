@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 from typing import Any
+import re
 
 import yaml
 
@@ -32,28 +33,55 @@ def load_memory(path: Path) -> list[dict[str, Any]]:
     return data.get("records", []) if isinstance(data, dict) else []
 
 
-def classify(task: str) -> str:
+def classify(task: str, known_scopes: set[str] | None = None) -> str:
     lowered = task.casefold()
+    for scope in sorted(known_scopes or set(), key=len, reverse=True):
+        if scope and scope.casefold() in lowered:
+            return scope
     for scope, words in KEYWORDS.items():
         if any(word.casefold() in lowered for word in words):
             return scope
     return "general"
 
 
-def discover_skills(home: Path, repo: Path | None) -> list[str]:
+def _skill_metadata(path: Path) -> dict[str, Any]:
+    text = (path / "SKILL.md").read_text(encoding="utf-8", errors="ignore")
+    if not text.startswith("---"):
+        return {"name": path.name, "description": "", "keywords": []}
+    end = text.find("\n---", 3)
+    if end < 0:
+        return {"name": path.name, "description": "", "keywords": []}
+    data = yaml.safe_load(text[3:end]) or {}
+    return {"name": data.get("name", path.name), "description": data.get("description", ""), "keywords": data.get("keywords", []) or [], "scope": data.get("scope")}
+
+
+def discover_skills(home: Path, repo: Path | None) -> list[dict[str, Any]]:
     roots = [home / "skills"]
     if repo:
         roots.append(repo / "skills")
-    found: set[str] = set()
+    found: dict[str, dict[str, Any]] = {}
     for root in roots:
         if root.is_dir():
-            found.update(p.name for p in root.iterdir() if p.is_dir() and (p / "SKILL.md").is_file())
-    return sorted(found)
+            for p in root.iterdir():
+                if p.is_dir() and (p / "SKILL.md").is_file():
+                    found[p.name] = _skill_metadata(p)
+    return [found[name] for name in sorted(found)]
+
+
+def _matches(task: str, metadata: dict[str, Any]) -> bool:
+    lowered = task.casefold()
+    terms = [str(x) for x in metadata.get("keywords", [])]
+    terms += [str(metadata.get("scope") or ""), str(metadata.get("name") or "")]
+    if any(term and term.casefold() in lowered for term in terms):
+        return True
+    words = re.findall(r"[a-z0-9]{3,}", str(metadata.get("description", "")).casefold())
+    return any(word in lowered for word in words)
 
 
 def route(task: str, home: Path, repo: Path | None) -> dict[str, Any]:
-    scope = classify(task)
     memory = load_memory(home / "personal-agent-system" / "memory" / "rules.yaml")
+    known_scopes = {str(r.get("scope")) for r in memory if r.get("scope") and r.get("scope") not in {"all-projects", "global"}}
+    scope = classify(task, known_scopes)
     relevant = [
         r for r in memory
         if r.get("status") in {"validated", "applied"}
@@ -66,11 +94,12 @@ def route(task: str, home: Path, repo: Path | None) -> dict[str, Any]:
          for key, value in record.items()}
         for record in relevant
     ]
-    skills = discover_skills(home, repo)
+    skill_meta = discover_skills(home, repo)
+    skills = [item["name"] for item in skill_meta]
     selected = ["personal-project-router"]
     # User-created skills advertise their own scope in SKILL.md. The core
     # router does not maintain a hard-coded domain list.
-    candidates = [name for name in skills if name not in {"personal-project-router", "personal-memory"}]
+    candidates = [item["name"] for item in skill_meta if item["name"] not in {"personal-project-router", "personal-memory"} and _matches(task, item)]
     selected.extend(candidates)
     return {"task": task, "scope": scope, "selected_skills": selected,
             "available_skills": skills, "memory_records": relevant,

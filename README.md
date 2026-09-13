@@ -93,7 +93,7 @@ Create a local directory with a concise `SKILL.md`:
 %CODEX_HOME%\skills\my-domain-skill\SKILL.md
 ```
 
-Use the Agent Skills format with a unique name and a description that says when it applies. Keep personal examples and preferences in local memory, not in a public Skill repository. The router discovers it on the next preflight.
+Use the Agent Skills format with a unique name and a description that says when it applies. You may add optional `scope` and `keywords` frontmatter so the router can select it only for matching tasks. Keep personal examples and preferences in local memory, not in a public Skill repository. The router discovers it on the next preflight.
 
 ## Update and recovery
 

@@ -19,7 +19,7 @@ The router must check, in order: current project instructions and state, locally
 2. For a project task, inspect the current project, relevant `AGENTS.md`, Git state, and available local skills.
 3. Retrieve only memory records whose scope matches the task. Treat memory as context, not authority.
 4. Choose the narrowest suitable local skill. If none fits, search GitHub/skills.sh and inspect the candidate's source, reputation, license, freshness, and actual `SKILL.md` before recommending or adapting it.
-5. State the selected skill(s), applicable constraints, and acceptance checks internally before implementation. Do not invent missing requirements.
+5. Match a user Skill by its declared `keywords`, optional `scope`, name, or description. Select only matching Skills; never load every installed Skill by default. State the selected skill(s), applicable constraints, and acceptance checks internally before implementation. Do not invent missing requirements.
 6. Execute the task within the user's authorization. Preserve uncommitted work and reference-file layout unless a redesign is requested.
 7. Run the smallest meaningful verification. Separate live evidence, source inspection, old logs, and hypotheses in the report.
 8. If behavior changed, run or record a small regression check for the relevant local memory rule before marking the task complete.

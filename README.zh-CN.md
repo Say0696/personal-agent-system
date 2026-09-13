@@ -94,7 +94,7 @@ candidate -> validated -> applied
 %CODEX_HOME%\skills\my-domain-skill\SKILL.md
 ```
 
-使用 Agent Skills 格式，填写唯一名称和适用场景。个人示例和个人偏好放在本地记忆，不要放进公开 Skill 仓库。路由器在下次预检时会发现它。
+使用 Agent Skills 格式，填写唯一名称和适用场景；可以在 frontmatter 中增加 `scope` 和 `keywords`，让总控只在匹配任务时选择它。个人示例和个人偏好放在本地记忆，不要放进公开 Skill 仓库。路由器在下次预检时会发现它。
 
 ## 更新和恢复
 
