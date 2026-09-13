@@ -5,7 +5,12 @@ description: Maintain scoped, evidence-backed personal rules for recurring work.
 
 # Personal Memory
 
-Store small, reusable records rather than transcripts. Keep them in a user-local file outside the public repository. Each record must include:
+Store small, reusable records rather than transcripts. There are two destinations:
+
+1. **Skill-local overlay (default):** ordinary task or domain lessons, kept under a user-local overlay for the matching Skill. These rules help that Skill and are not automatically global.
+2. **Persistent memory:** important, permanent, cross-project facts explicitly approved by the user for `MEMORY.md`. Keep this destination rare and concise.
+
+Keep both destinations outside the public repository. Each structured record must include:
 
 - `scope`: domain or project boundary;
 - `rule`: future behavior in one sentence;
@@ -30,8 +35,8 @@ Resolve conflicts in this order: current user request, system/developer instruct
 
 ## Consent and scope
 
-Saving a new personal rule requires an explicit user choice at the end of the task. Offer these scopes: current task, current project, similar projects, or all projects. Silence means do not save. Store the narrowest scope the user selects; a later request can widen it. A correction is evidence for a candidate, not automatic permission to create durable memory.
+Saving a new personal rule requires an explicit user choice at the end of the task. Offer the destination first: matching Skill-local overlay (recommended) or persistent `MEMORY.md` (only for important permanent cross-project information). Then offer scope: current task, current project, similar projects, or all projects. Silence means do not save. Store the narrowest scope the user selects; a later request can widen it. A correction is evidence for a candidate, not automatic permission to create durable memory.
 
 Do not store secrets, raw transcripts, private payloads, or unverified guesses. Keep project facts scoped to the project. When evidence is insufficient, use `open-question` rather than pretending to remember. Never commit or upload the user's local memory file; public releases contain only the empty schema and generic lifecycle.
 
-For repeatable local operations, use `scripts/memory_cli.py` with a user-local `--file` path. The public repository ships the manager and schema, not personal records.
+For repeatable Skill-local operations, use `scripts/memory_cli.py` with a user-local `--file` path. The public repository ships the manager and schema, not personal records. Do not use the CLI to write persistent `MEMORY.md` unless the user explicitly requested that destination and the format has been checked first.

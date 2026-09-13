@@ -17,7 +17,7 @@ Use this as the first preflight for a project task. Keep the preflight brief and
 6. Execute the task within the user's authorization. Preserve uncommitted work and reference-file layout unless a redesign is requested.
 7. Run the smallest meaningful verification. Separate live evidence, source inspection, old logs, and hypotheses in the report.
 8. If behavior changed, run or record a small regression check for the relevant local memory rule before marking the task complete.
-9. At the end of a non-trivial task, offer to save any reusable correction or preference. Ask for the scope instead of assuming it: `仅本次任务`、`当前项目`、`同类项目`、`所有项目` 或 `不保存`.
+9. At the end of a non-trivial task, offer to save any reusable correction or preference. Ask for both destination and scope instead of assuming them: default destination is the matching Skill's private local overlay; persistent `MEMORY.md` is reserved for information the user explicitly calls important, permanent, or cross-project.
 
 ## Routing boundaries
 
@@ -36,7 +36,7 @@ After reporting the result, use a short prompt such as:
 
 > 这次出现了一个可能可复用的规则：`<规则>`。是否保存？请选择适用范围：仅本次任务、当前项目、同类项目、所有项目，或不保存。
 
-If the user chooses a scope, create a local `candidate` record with that scope and the minimum evidence. If the user chooses `仅本次任务` or `不保存`, do not write durable memory. Never infer consent from silence, a correction alone, or the fact that a rule seems useful.
+If the user chooses Skill-local storage, create a local `candidate` record under the matching Skill overlay with the minimum evidence. If the user explicitly chooses persistent memory, write only the concise important fact to the user's `MEMORY.md` workflow after confirmation. If the user chooses `仅本次任务` or `不保存`, do not write durable memory. Never infer consent from silence, a correction alone, or the fact that a rule seems useful.
 
 Before any public push, check that local memory files, private paths, credentials, and raw transcripts are absent from the staged tree.
 
