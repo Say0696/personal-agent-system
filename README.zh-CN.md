@@ -11,6 +11,8 @@
 - `skills/computer-development`：计算机和软件项目流程。
 - `references/skill-registry.yaml`：已安装和推荐 Skill 清单。
 - `memory/rules.example.yaml`：用户本地规则的空白示例。个人要求不会放进这个公开仓库。
+- `scripts/memory_cli.py`：只操作本地记忆的新增、查询和状态更新工具。
+- `scripts/privacy_check.py`：发布前检查暂存区是否包含个人内容。
 
 ## 成长机制
 

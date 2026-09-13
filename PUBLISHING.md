@@ -24,3 +24,9 @@ Get-ChildItem .\skills -Directory | ForEach-Object { python $validator $_.FullNa
 ```
 
 The public repository must not contain credentials, raw conversation logs, private project paths, personal memory records, or unredacted tool payloads. Record portable upstream source URLs and versions in `references/skill-registry.yaml` when external skills are adopted. Keep user-specific rules in an ignored local overlay.
+
+Run the staged-tree privacy check before pushing:
+
+```powershell
+python scripts/privacy_check.py
+```

@@ -29,3 +29,5 @@ Resolve conflicts in this order: current user request, system/developer instruct
 6. Re-run the representative task. Roll back or supersede the rule when evidence changes.
 
 Do not store secrets, raw transcripts, private payloads, or unverified guesses. Keep project facts scoped to the project. When evidence is insufficient, use `open-question` rather than pretending to remember. Never commit or upload the user's local memory file; public releases contain only the empty schema and generic lifecycle.
+
+For repeatable local operations, use `scripts/memory_cli.py` with a user-local `--file` path. The public repository ships the manager and schema, not personal records.

@@ -11,6 +11,8 @@ A personal, evolving skill system for Codex: route each project task through a l
 - `skills/computer-development` — software and computer-project workflow.
 - `references/skill-registry.yaml` — installed and recommended skill inventory.
 - `memory/rules.example.yaml` — empty schema for user-specific local rules. Personal records are deliberately excluded from this repository.
+- `scripts/memory_cli.py` — local-only memory capture, listing, and status changes.
+- `scripts/privacy_check.py` — staged-tree check before a public push.
 
 ## Installation
 
