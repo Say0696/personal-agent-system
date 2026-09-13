@@ -14,8 +14,6 @@
 - `scripts/route.py`：只读的任务分类、Skill 和本地记忆路由工具。
 - `scripts/install.ps1`、`scripts/update.ps1`、`scripts/uninstall.ps1`：Windows 安装、更新和卸载辅助脚本。
 - `scripts/rollback.ps1`：恢复最近一次更新备份。
-- `scripts/route.py`：只读的项目预检和领域 Skill 路由器。
-- `scripts/install.ps1` / `update.ps1` / `uninstall.ps1`：安装、更新和移除 Skill；更新前会备份已有 Skill。
 
 ## 安装和路由
 
@@ -28,6 +26,8 @@ python .\scripts\route.py --json "修复代码并运行测试"
 ```
 
 安装器只复制通用核心 Skill，并在 `$CODEX_HOME/personal-agent-system/memory/rules.yaml` 创建本地空白记忆；已有记忆不会覆盖。需要数学、文档或其他领域时，再由用户在本机添加对应 Skill。`route.py` 是只读预检，不会自动安装、修改记忆或发布外部内容。更新使用 `update.ps1`，它会先备份已安装的 Skill；`uninstall.ps1` 只移除清单中的 Skill，并保留个人记忆。
+
+非简单任务结束后，总控可以询问是否保存可复用要求，并让用户选择适用范围。用户不确认或选择“不保存”时，不写入长期记忆。
 
 ## 成长机制
 

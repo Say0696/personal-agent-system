@@ -14,8 +14,6 @@ A personal, evolving skill system for Codex: route each project task through a l
 - `scripts/route.py` — read-only task classification and local skill/memory routing.
 - `scripts/install.ps1`, `scripts/update.ps1`, `scripts/uninstall.ps1` — Windows lifecycle helpers.
 - `scripts/rollback.ps1` — restores the newest update backup.
-- `scripts/route.py` — read-only project preflight and domain skill router.
-- `scripts/install.ps1` / `update.ps1` / `uninstall.ps1` — install, backup-and-update, and remove skills.
 
 ## Install and route
 
@@ -47,6 +45,8 @@ python scripts/memory_cli.py rollback <id> --reason "no longer correct"
 ```
 
 The router remains implicitly discoverable when the host supports implicit selection. It does not replace the host's skill selection or override system, developer, user, or project instructions.
+
+At the end of a non-trivial task, the router may ask whether a reusable preference should be saved and which scope it should have. Silence or “do not save” leaves the preference out of durable memory.
 
 ## Growth model
 

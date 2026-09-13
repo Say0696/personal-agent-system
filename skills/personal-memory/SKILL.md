@@ -28,6 +28,10 @@ Resolve conflicts in this order: current user request, system/developer instruct
 5. Apply to exactly one durable owner and record the change reference.
 6. Re-run the representative task. Roll back or supersede the rule when evidence changes.
 
+## Consent and scope
+
+Saving a new personal rule requires an explicit user choice at the end of the task. Offer these scopes: current task, current project, similar projects, or all projects. Silence means do not save. Store the narrowest scope the user selects; a later request can widen it. A correction is evidence for a candidate, not automatic permission to create durable memory.
+
 Do not store secrets, raw transcripts, private payloads, or unverified guesses. Keep project facts scoped to the project. When evidence is insufficient, use `open-question` rather than pretending to remember. Never commit or upload the user's local memory file; public releases contain only the empty schema and generic lifecycle.
 
 For repeatable local operations, use `scripts/memory_cli.py` with a user-local `--file` path. The public repository ships the manager and schema, not personal records.

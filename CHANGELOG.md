@@ -7,6 +7,7 @@
 - Added regression and privacy checks for release readiness.
 - Kept personal memory local-only and the public starter neutral.
 - Added duplicate detection, schema validation, backups, search, and controlled status transitions.
+- Added explicit end-of-task consent and scope selection before saving reusable preferences.
 
 ## 0.2.0 - 2026-09-13
 
