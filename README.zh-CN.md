@@ -123,6 +123,32 @@ python -m pytest -q
 - 一次纠正只有在用户确认后才会成为候选规则；不回应不会产生长期记忆。
 - 当前用户要求始终优先于旧记忆。采用外部 Skill 前要检查实际内容。
 
+## 常见问题
+
+### 为什么 Skill 列表里没有 `personal-agent-system`？
+
+`personal-agent-system` 是 GitHub 仓库和安装包名称。仓库中真正可调用的 Skill 入口是 `personal-project-router` 和 `personal-memory`。Codex 的 Skill 列表显示的是可调用入口，不是仓库名称。
+
+### 总控一定会自动运行吗？
+
+全局协议会要求 Codex 在项目任务开始时运行总控，但实际的隐式 Skill 加载取决于宿主。如果需要确定性的只读预检，可以运行 `python scripts/route.py --json "<任务>"`。
+
+### 我的个人规则保存在哪里？
+
+保存在本机的 `%CODEX_HOME%\\personal-agent-system\\memory\\rules.yaml`。公开仓库只包含 `memory/rules.example.yaml`；个人规则已被 Git 忽略，不会自动推送。
+
+### 为什么核心里没有数学、编程或文档 Skill？
+
+核心系统有意保持领域无关。只有在实际需要时，才在本机添加对应 Skill。任何包含 `SKILL.md` 的目录都可以被发现，不要求固定的领域清单。
+
+### 使用越久，系统会不会越来越臃肿？
+
+只有经过确认、带有明确作用域的规则才应进入长期记忆。总控只读取匹配任务的 `validated` 和 `applied` 规则，不会把全部记忆都加载进来。一次性要求如果没有明确选择保存范围，就只留在当前任务。
+
+### 本地学习会自动更新 GitHub 吗？
+
+不会。本地记忆更新和公开仓库更新是分开的。只有经过隐私和可移植性检查的通用流程改进，才适合发布到公共仓库。
+
 ## 许可证
 
 MIT，详见 [LICENSE](LICENSE)。

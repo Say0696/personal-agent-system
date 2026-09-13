@@ -122,6 +122,32 @@ The check script validates Skill structure, compiles Python scripts, runs tests,
 - A correction becomes a candidate only after the user chooses to save it; silence never creates durable memory.
 - Current user instructions override older memory. External Skill quality is inspected before adoption.
 
+## FAQ
+
+### Why is `personal-agent-system` not shown as a Skill?
+
+`personal-agent-system` is the GitHub repository and package name. The callable Skill entrypoints inside it are `personal-project-router` and `personal-memory`. The Codex Skill list shows callable entrypoints, not repository names.
+
+### Does the router always run automatically?
+
+The global protocol asks Codex to run the router for project tasks. Actual implicit Skill loading depends on the host. Run `python scripts/route.py --json "<task>"` when you need a deterministic, read-only preflight.
+
+### Where are my personal rules?
+
+They are stored locally at `%CODEX_HOME%\\personal-agent-system\\memory\\rules.yaml`. The public repository contains only `memory/rules.example.yaml`; personal rules are ignored by Git and are never pushed automatically.
+
+### Why are there no mathematics, coding, or document Skills in the core?
+
+The core is domain-agnostic. Add a local Skill only when your work needs one. Any directory containing a `SKILL.md` can be discovered; the system does not require a fixed list of domains.
+
+### Will the system become larger every time I use it?
+
+Only confirmed, scoped rules should enter durable memory. The router loads matching `validated` and `applied` records instead of the entire memory store. One-off requests remain in the current task unless the user explicitly chooses a scope at the end.
+
+### Does local learning update GitHub?
+
+No. Local memory updates and public repository updates are separate. Publish only generic workflow improvements after reviewing them for privacy and portability.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
