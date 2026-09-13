@@ -29,6 +29,7 @@ Run the staged-tree privacy check before pushing:
 
 ```powershell
 python scripts/privacy_check.py
+python scripts/privacy_check.py --all
 ```
 
 For a full local check after installing `requirements-dev.txt`, run:
@@ -36,3 +37,5 @@ For a full local check after installing `requirements-dev.txt`, run:
 ```powershell
 .\scripts\check.ps1
 ```
+
+If an update causes a problem, restore the newest backup with `scripts\rollback.ps1`.

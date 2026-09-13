@@ -15,6 +15,7 @@
 - `scripts/privacy_check.py`：发布前检查暂存区是否包含个人内容。
 - `scripts/route.py`：只读的任务分类、Skill 和本地记忆路由工具。
 - `scripts/install.ps1`、`scripts/update.ps1`、`scripts/uninstall.ps1`：Windows 安装、更新和卸载辅助脚本。
+- `scripts/rollback.ps1`：恢复最近一次更新备份。
 - `scripts/route.py`：只读的项目预检和领域 Skill 路由器。
 - `scripts/install.ps1` / `update.ps1` / `uninstall.ps1`：安装、更新和移除 Skill；更新前会备份已有 Skill。
 
@@ -62,6 +63,6 @@ python scripts/memory_cli.py rollback <id> --reason "规则已不再适用"
 
 ## 状态
 
-版本 0.2.0。这是一个有意保持空白的起点。用户的规则只在本机根据真实纠正逐步成长，不会发布到这里。
+版本 1.0.0。这是一个有意保持空白的起点。用户的规则只在本机根据真实纠正逐步成长，不会发布到这里。
 
 发布流程和参考的开源项目做法见 [PUBLISHING.md](PUBLISHING.md)。

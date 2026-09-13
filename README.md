@@ -15,6 +15,7 @@ A personal, evolving skill system for Codex: route each project task through a l
 - `scripts/privacy_check.py` — staged-tree check before a public push.
 - `scripts/route.py` — read-only task classification and local skill/memory routing.
 - `scripts/install.ps1`, `scripts/update.ps1`, `scripts/uninstall.ps1` — Windows lifecycle helpers.
+- `scripts/rollback.ps1` — restores the newest update backup.
 - `scripts/route.py` — read-only project preflight and domain skill router.
 - `scripts/install.ps1` / `update.ps1` / `uninstall.ps1` — install, backup-and-update, and remove skills.
 
@@ -64,6 +65,6 @@ New lessons start as `candidate`. A lesson becomes `validated` only after a repr
 
 ## Status
 
-Version 0.2.0. This repository is intentionally a blank starter. A user grows a private local overlay from demonstrated corrections; personal requirements are not published here.
+Version 1.0.0. This repository is intentionally a blank starter. A user grows a private local overlay from demonstrated corrections; personal requirements are not published here.
 
 See [PUBLISHING.md](PUBLISHING.md) for the release workflow and source patterns used.

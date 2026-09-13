@@ -7,7 +7,8 @@ import sys
 
 
 def main() -> int:
-    files = subprocess.check_output(["git", "diff", "--cached", "--name-only"], text=True).splitlines()
+    all_files = "--all" in sys.argv[1:]
+    files = subprocess.check_output(["git", "ls-files"] if all_files else ["git", "diff", "--cached", "--name-only"], text=True).splitlines()
     bad_names = {"memory/rules.yaml", ".env", ".env.local", ".env.production"}
     bad_patterns = [
         re.compile(r"[A-Za-z]:[\\/]Users[\\/]", re.I),

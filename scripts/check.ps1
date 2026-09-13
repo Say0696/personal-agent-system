@@ -9,5 +9,5 @@ if (Test-Path $validator) {
 $pyFiles = @((Join-Path $PSScriptRoot 'memory_cli.py'), (Join-Path $PSScriptRoot 'privacy_check.py'), (Join-Path $PSScriptRoot 'route.py'))
 python -m py_compile $pyFiles
 if (-not $SkipPytest) { python -m pytest -q }
-if (git diff --cached --name-only) { python (Join-Path $PSScriptRoot 'privacy_check.py') } else { Write-Host 'Privacy check skipped: no staged paths.' }
+python (Join-Path $PSScriptRoot 'privacy_check.py') --all
 Write-Host 'Checks complete.'

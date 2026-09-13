@@ -84,7 +84,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only personal project preflight")
     parser.add_argument("task", nargs="+", help="task description")
     parser.add_argument("--json", action="store_true", dest="as_json")
-    parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--repo", type=Path, default=Path.cwd(), help="project to inspect (default: current directory)")
     args = parser.parse_args()
     result = route(" ".join(args.task), codex_home(), args.repo)
     if args.as_json:
