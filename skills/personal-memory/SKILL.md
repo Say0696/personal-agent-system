@@ -15,6 +15,10 @@ Store small, reusable records rather than transcripts. Keep them in a user-local
 - `owner`: the skill, instruction file, script, or project rule that owns it;
 - `last_verified`: date of the latest check.
 
+## Precedence
+
+Resolve conflicts in this order: current user request, system/developer instructions, project instructions, validated local memory, then generic skills and external references. A memory record can guide a task only when its scope matches; it cannot override a newer explicit request.
+
 ## Lifecycle
 
 1. Capture a minimal redacted candidate.

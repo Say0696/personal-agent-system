@@ -16,6 +16,7 @@ Use this as the first preflight for a project task. Keep the preflight brief and
 5. State the selected skill(s), applicable constraints, and acceptance checks internally before implementation. Do not invent missing requirements.
 6. Execute the task within the user's authorization. Preserve uncommitted work and reference-file layout unless a redesign is requested.
 7. Run the smallest meaningful verification. Separate live evidence, source inspection, old logs, and hypotheses in the report.
+8. If behavior changed, run or record a small regression check for the relevant local memory rule before marking the task complete.
 
 ## Routing boundaries
 
@@ -27,6 +28,8 @@ Use this as the first preflight for a project task. Keep the preflight brief and
 ## Feedback loop
 
 When the user corrects a result or a reusable failure is evidenced, hand the minimum redacted lesson to `personal-memory` as a `candidate` in the local-only memory store. Do not turn a one-off exception into a global rule. Promote only after a representative check supports it and record the durable owner that changed. Do not publish the record automatically.
+
+Before any public push, check that local memory files, private paths, credentials, and raw transcripts are absent from the staged tree.
 
 ## Domain dispatch
 
