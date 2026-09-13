@@ -17,9 +17,7 @@ import yaml
 
 
 KEYWORDS = {
-    "mathematics": ("math", "mathemat", "数学", "分数", "方程", "几何", "练习题"),
-    "documents": ("word", "docx", "pdf", "文档", "排版", "论文", "表格", "幻灯片"),
-    "software": ("code", "coding", "软件", "代码", "项目", "编程", "构建", "测试", "服务器"),
+    "general": ("task", "任务", "项目", "工作"),
 }
 
 
@@ -36,12 +34,10 @@ def load_memory(path: Path) -> list[dict[str, Any]]:
 
 def classify(task: str) -> str:
     lowered = task.casefold()
-    scores = {
-        scope: sum(1 for word in words if word.casefold() in lowered)
-        for scope, words in KEYWORDS.items()
-    }
-    best, score = max(scores.items(), key=lambda item: item[1])
-    return best if score else "general"
+    for scope, words in KEYWORDS.items():
+        if any(word.casefold() in lowered for word in words):
+            return scope
+    return "general"
 
 
 def discover_skills(home: Path, repo: Path | None) -> list[str]:
@@ -72,12 +68,13 @@ def route(task: str, home: Path, repo: Path | None) -> dict[str, Any]:
     ]
     skills = discover_skills(home, repo)
     selected = ["personal-project-router"]
-    domain_skill = {"mathematics": "math-profile", "documents": "document-fidelity", "software": "computer-development"}.get(scope)
-    if domain_skill and domain_skill in skills:
-        selected.append(domain_skill)
+    # User-created skills advertise their own scope in SKILL.md. The core
+    # router does not maintain a hard-coded domain list.
+    candidates = [name for name in skills if name not in {"personal-project-router", "personal-memory"}]
+    selected.extend(candidates)
     return {"task": task, "scope": scope, "selected_skills": selected,
             "available_skills": skills, "memory_records": relevant,
-            "external_search": not bool(domain_skill and domain_skill in skills)}
+            "external_search": not bool(candidates)}
 
 
 def main() -> int:

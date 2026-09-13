@@ -6,9 +6,7 @@
 
 - `skills/personal-project-router`：任务预检、Skill 搜索、路由、证据和问题回收。
 - `skills/personal-memory`：带作用域的记忆，以及 candidate/validated/applied 状态。
-- `skills/math-profile`：数学内容的格式和验收规则。
-- `skills/document-fidelity`：保持参考文件排版的文档流程。
-- `skills/computer-development`：计算机和软件项目流程。
+- `skills/`：公开仓库只包含两个通用核心 Skill；需要具体领域时由用户在本机添加。
 - `references/skill-registry.yaml`：已安装和推荐 Skill 清单。
 - `memory/rules.example.yaml`：用户本地规则的空白示例。个人要求不会放进这个公开仓库。
 - `scripts/memory_cli.py`：只操作本地记忆的新增、查询和状态更新工具。
@@ -29,7 +27,7 @@ python .\scripts\route.py "创建一份数学练习题"
 python .\scripts\route.py --json "修复代码并运行测试"
 ```
 
-安装器只复制通用 Skill，并在 `$CODEX_HOME/personal-agent-system/memory/rules.yaml` 创建本地空白记忆；已有记忆不会覆盖。`route.py` 是只读预检，不会自动安装、修改记忆或发布外部内容。更新使用 `update.ps1`，它会先备份已安装的 Skill；`uninstall.ps1` 只移除清单中的 Skill，并保留个人记忆。
+安装器只复制通用核心 Skill，并在 `$CODEX_HOME/personal-agent-system/memory/rules.yaml` 创建本地空白记忆；已有记忆不会覆盖。需要数学、文档或其他领域时，再由用户在本机添加对应 Skill。`route.py` 是只读预检，不会自动安装、修改记忆或发布外部内容。更新使用 `update.ps1`，它会先备份已安装的 Skill；`uninstall.ps1` 只移除清单中的 Skill，并保留个人记忆。
 
 ## 成长机制
 

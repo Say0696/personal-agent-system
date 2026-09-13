@@ -20,7 +20,7 @@ Use this as the first preflight for a project task. Keep the preflight brief and
 
 ## Routing boundaries
 
-- Delegate domain work to a focused skill: `math-profile`, `document-fidelity`, or `computer-development` when applicable.
+- Delegate domain work to a user-created focused skill when one is available; do not assume a fixed domain catalog.
 - A skill is not automatically trusted because it appears in search results. Read its instructions and check its maintenance signals first.
 - If two skills overlap, prefer the more specific one and use the router only for coordination.
 - Never silently install, publish, delete, or send external messages without the authorization required by the current task.
@@ -33,6 +33,4 @@ Before any public push, check that local memory files, private paths, credential
 
 ## Domain dispatch
 
-- Mathematics: read `math-profile` and the local mathematics profile before generating exercises or math documents.
-- Documents: read `document-fidelity` and the local document profile before editing or imitating a reference file.
-- Software/computer projects: read `computer-development` and the local computer-development profile before changing code or runtime state.
+- Any domain: read the matching user-created Skill and local profile when available.

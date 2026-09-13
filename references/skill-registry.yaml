@@ -9,18 +9,10 @@ skills:
     scope: global
     source: local
     status: active
-  - name: math-profile
-    scope: mathematics
-    source: local
-    status: active
-  - name: document-fidelity
-    scope: documents
-    source: local
-    status: active
-  - name: computer-development
-    scope: software
-    source: local
-    status: active
+  - name: user-created-skills
+    scope: any
+    source: local overlay
+    status: optional
   - name: find-skills
     scope: discovery
     source: host-provided find-skills skill

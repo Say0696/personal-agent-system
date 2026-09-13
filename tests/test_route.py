@@ -17,13 +17,15 @@ def run(task: str, tmp_path: Path):
     )
 
 
-def test_math_route(tmp_path):
-    result = json.loads(run("生成数学分数练习题", tmp_path).stdout)
-    assert result["scope"] == "mathematics"
-    assert "math-profile" in result["selected_skills"]
+def test_unknown_domain_is_general(tmp_path):
+    result = json.loads(run("设计一个摄影项目", tmp_path).stdout)
+    assert result["scope"] == "general"
+    assert result["selected_skills"] == ["personal-project-router"]
 
 
-def test_software_route(tmp_path):
-    result = json.loads(run("修复代码并运行测试", tmp_path).stdout)
-    assert result["scope"] == "software"
-    assert "computer-development" in result["selected_skills"]
+def test_user_skill_is_discovered_dynamically(tmp_path):
+    skill = tmp_path / "skills" / "photography-helper"
+    skill.mkdir(parents=True)
+    (skill / "SKILL.md").write_text("---\nname: photography-helper\ndescription: photography workflow\n---\n", encoding="utf-8")
+    result = json.loads(run("设计一个摄影项目", tmp_path).stdout)
+    assert "photography-helper" in result["selected_skills"]

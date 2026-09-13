@@ -6,9 +6,7 @@ A personal, evolving skill system for Codex: route each project task through a l
 
 - `skills/personal-project-router` — task preflight, skill discovery, routing, evidence, and feedback capture.
 - `skills/personal-memory` — scoped memory records with candidate/validated/applied states.
-- `skills/math-profile` — mathematics-specific output and verification rules.
-- `skills/document-fidelity` — reference-preserving document workflow.
-- `skills/computer-development` — software and computer-project workflow.
+- `skills/` — only the two generic core Skills are included; users add domain Skills locally when needed.
 - `references/skill-registry.yaml` — installed and recommended skill inventory.
 - `memory/rules.example.yaml` — empty schema for user-specific local rules. Personal records are deliberately excluded from this repository.
 - `scripts/memory_cli.py` — local-only memory capture, listing, and status changes.
@@ -25,11 +23,11 @@ From PowerShell in the repository:
 
 ```powershell
 .\scripts\install.ps1
-python .\scripts\route.py "Create a mathematics worksheet"
+python .\scripts\route.py "Create a project artifact"
 python .\scripts\route.py --json "Fix the code and run tests"
 ```
 
-The installer copies generic skills and creates a blank local memory file at `$CODEX_HOME/personal-agent-system/memory/rules.yaml` without overwriting an existing one. The router is read-only: it never installs skills, changes memory, or publishes content. `update.ps1` backs up installed skills before updating; `uninstall.ps1` removes only skills recorded in its manifest and preserves personal memory.
+The installer copies only the generic core Skills and creates a blank local memory file at `$CODEX_HOME/personal-agent-system/memory/rules.yaml` without overwriting an existing one. Add a domain Skill locally when your work requires one. The router is read-only: it never installs skills, changes memory, or publishes content. `update.ps1` backs up installed skills before updating; `uninstall.ps1` removes only skills recorded in its manifest and preserves personal memory.
 
 ## Installation
 
