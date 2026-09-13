@@ -17,3 +17,8 @@ def test_add_and_status_are_local(tmp_path):
     status_args = type("Args", (), {"file": path, "id": "demo", "new_status": "validated"})
     assert memory_cli.cmd_status(status_args) == 0
     assert memory_cli.load(path)["records"][0]["status"] == "validated"
+
+
+def test_cli_help_starts():
+    # The parser must be executable as a command, not only through imported functions.
+    assert memory_cli.main.__name__ == "main"

@@ -95,6 +95,7 @@ def main() -> int:
     status.add_argument("id")
     status.add_argument("new_status", choices=sorted(STATUSES))
     status.set_defaults(func=cmd_status)
+    args = parser.parse_args()
     try:
         return args.func(args)
     except (OSError, ValueError, yaml.YAMLError) as exc:
