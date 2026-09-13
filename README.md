@@ -1,68 +1,127 @@
 # Personal Agent System
 
-A personal, evolving skill system for Codex: route each project task through a local-first skill check, retrieve domain-specific memory, preserve reference formatting, and turn verified corrections into reusable rules.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-6%20passed-brightgreen.svg)](tests)
 
-## Structure
+A local-first, privacy-preserving starter system for personal Agent Skills. It routes project tasks, retrieves matching local memory, discovers user-added Skills, and turns confirmed corrections into scoped rules that improve future work.
 
-- `skills/personal-project-router` — task preflight, skill discovery, routing, evidence, and feedback capture.
-- `skills/personal-memory` — scoped memory records with candidate/validated/applied states.
-- `skills/` — only the two generic core Skills are included; users add domain Skills locally when needed.
-- `references/skill-registry.yaml` — installed and recommended skill inventory.
-- `memory/rules.example.yaml` — empty schema for user-specific local rules. Personal records are deliberately excluded from this repository.
-- `scripts/memory_cli.py` — local-only memory capture, listing, and status changes.
-- `scripts/privacy_check.py` — staged-tree check before a public push.
-- `scripts/route.py` — read-only task classification and local skill/memory routing.
-- `scripts/install.ps1`, `scripts/update.ps1`, `scripts/uninstall.ps1` — Windows lifecycle helpers.
-- `scripts/rollback.ps1` — restores the newest update backup.
+The repository is intentionally domain-agnostic. It ships two generic core Skills; users add mathematics, coding, writing, video, research, or any other domain locally when needed.
 
-## Install and route
+> 中文说明：[README.zh-CN.md](README.zh-CN.md)
+
+## What it does
+
+- Runs a lightweight preflight for multi-step project tasks.
+- Discovers Skills from the Codex home and current project instead of using a fixed domain catalog.
+- Reads only validated or applied memory records whose scope matches the task.
+- Keeps personal memory outside the public repository.
+- Asks for explicit consent and scope before saving a reusable preference.
+- Manages memory candidates, validation, application, rollback, backups, and search.
+- Installs, updates, rolls back, and uninstalls the generic core Skills on Windows.
+- Checks staged or tracked content for personal paths, local memory, environment files, and common tokens.
+
+## Architecture
+
+```text
+User task -> personal-project-router -> local memory and Skill discovery
+                                      -> optional user Skill
+                                      -> execution and verification
+                                      -> consent -> local candidate
+                                      -> validation -> applied rule
+```
+
+The core does not assume a fixed domain. Any local directory containing a `SKILL.md` can be discovered dynamically.
+
+## Quick start on Windows
 
 From PowerShell in the repository:
 
 ```powershell
+python -m pip install -r requirements.txt
 .\scripts\install.ps1
-python .\scripts\route.py "Create a project artifact"
-python .\scripts\route.py --json "Fix the code and run tests"
+python .\scripts\route.py --json "Create a project artifact"
 ```
 
-The installer copies only the generic core Skills and creates a blank local memory file at `$CODEX_HOME/personal-agent-system/memory/rules.yaml` without overwriting an existing one. Add a domain Skill locally when your work requires one. The router is read-only: it never installs skills, changes memory, or publishes content. `update.ps1` backs up installed skills before updating; `uninstall.ps1` removes only skills recorded in its manifest and preserves personal memory.
+The installer copies only the two generic core Skills and creates this local file when it does not already exist:
 
-## Installation
+```text
+%CODEX_HOME%\personal-agent-system\memory\rules.yaml
+```
 
-Copy the skill directories you want into your Codex skills directory, normally `%USERPROFILE%\\.codex\\skills`. Add the repository's generic `AGENTS.md` to the project where you use it. Keep your personal global protocol and memory overlay outside this public repository.
+Existing local memory is preserved. Add a domain Skill locally when a task needs one.
 
-Install Python dependencies for the local scripts with `python -m pip install -r requirements.txt`. Install `requirements-dev.txt` when running the test suite.
+## Runtime flow
 
-Useful commands:
+1. A multi-step task starts the router when the host supports implicit Skill selection; `scripts/route.py` is the deterministic manual entry point.
+2. The router inspects the current project, project instructions, Git state, and local Skill catalog.
+3. It loads only matching `validated` and `applied` local records.
+4. A suitable local Skill is selected. If none exists, the user can search GitHub or `skills.sh`, inspect its actual `SKILL.md`, and decide whether to install it.
+5. The task runs within the user's authorization and receives the smallest meaningful verification.
+6. The result separates live evidence, source inspection, old logs, and hypotheses.
+7. If a reusable correction appeared, the router asks whether to save it for this task, project, similar projects, all projects, or nowhere.
+
+Automatic Skill loading is host-dependent. The global `AGENTS.md` protocol asks Codex to perform this preflight for project tasks; the router never silently installs, publishes, or sends external messages.
+
+## Local memory lifecycle
+
+Personal records are never part of the public tree. Use the local CLI:
 
 ```powershell
-python scripts/route.py --json "create a math worksheet"
-python scripts/memory_cli.py add --scope mathematics --rule "..." --evidence "..."
-python scripts/memory_cli.py list --scope mathematics
-python scripts/memory_cli.py validate <id> --note "representative check"
-python scripts/memory_cli.py apply <id> --owner math-profile --change-ref "skill:..."
-python scripts/memory_cli.py rollback <id> --reason "no longer correct"
+python scripts/memory_cli.py add --scope writing --rule "Use the requested house style" --evidence "User-confirmed preference"
+python scripts/memory_cli.py list --scope writing
+python scripts/memory_cli.py search "house style"
+python scripts/memory_cli.py validate <id> --note "Representative task passed" --evidence-file .\evidence.txt
+python scripts/memory_cli.py apply <id> --owner writing-skill --change-ref "skill:writing-skill@abc123"
+python scripts/memory_cli.py rollback <id> --reason "Preference is no longer applicable"
 ```
 
-The router remains implicitly discoverable when the host supports implicit selection. It does not replace the host's skill selection or override system, developer, user, or project instructions.
+Records move through guarded states:
 
-At the end of a non-trivial task, the router may ask whether a reusable preference should be saved and which scope it should have. Silence or “do not save” leaves the preference out of durable memory.
+```text
+candidate -> validated -> applied
+     |          |           |
+  rejected   rejected   superseded / rolled_back
+```
 
-## Growth model
+Validation requires a note and evidence file or SHA-256 digest. Writes are backed up and replaced atomically. `export` is explicit because exported memory may contain private preferences.
 
-New lessons start as `candidate`. A lesson becomes `validated` only after a representative task or focused check supports it. It becomes `applied` only after one named durable owner changes. Each record keeps scope, evidence, examples, verification time, and rollback information.
+## Add a domain Skill locally
 
-## Design principles
+Create a local directory with a concise `SKILL.md`:
 
-- Search local skills first; search GitHub/skills.sh only when the local catalog has no suitable match.
-- Inspect a candidate skill's source, reputation, license, freshness, and actual instructions before recommending it.
-- Do not invent missing requirements. Ask or mark uncertainty when evidence is insufficient.
-- Treat a reference file's layout as a constraint; inspect before editing and preserve it unless the user requests redesign.
-- Use true mathematical notation in generated artifacts, such as `\\frac{a}{b}` for a stacked fraction.
-- Report evidence separately from hypotheses and old logs.
+```text
+%CODEX_HOME%\skills\my-domain-skill\SKILL.md
+```
 
-## Status
+Use the Agent Skills format with a unique name and a description that says when it applies. Keep personal examples and preferences in local memory, not in a public Skill repository. The router discovers it on the next preflight.
 
-Version 1.0.0. This repository is intentionally a blank starter. A user grows a private local overlay from demonstrated corrections; personal requirements are not published here.
+## Update and recovery
 
-See [PUBLISHING.md](PUBLISHING.md) for the release workflow and source patterns used.
+```powershell
+.\scripts\update.ps1
+.\scripts\rollback.ps1
+.\scripts\uninstall.ps1
+```
+
+Updates back up installed core Skill folders. Rollback restores the newest backup. Uninstall removes only Skills recorded in the install manifest and preserves local memory.
+
+## Verification and development
+
+```powershell
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+.\scripts\check.ps1
+```
+
+The check script validates Skill structure, compiles Python scripts, runs tests, and scans tracked content for private data. Use `python scripts/privacy_check.py` for staged files or add `--all` for all tracked files.
+
+## Privacy and design boundaries
+
+- Public files contain generic workflows and an empty memory schema.
+- Personal rules, private project facts, transcripts, credentials, and local overlays stay under the user's local Codex home.
+- A correction becomes a candidate only after the user chooses to save it; silence never creates durable memory.
+- Current user instructions override older memory. External Skill quality is inspected before adoption.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
