@@ -1,0 +1,4 @@
+version: 1
+# Copy this file to a local-only rules.yaml and fill it with your own rules.
+# Do not commit personal requirements, private paths, transcripts, or secrets.
+records: []

@@ -1,0 +1,5 @@
+# User-specific memory and local overlays must never be committed.
+memory/rules.yaml
+memory/local/
+.personal-agent-local/
+

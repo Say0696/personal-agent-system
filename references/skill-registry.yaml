@@ -1,0 +1,59 @@
+version: 1
+updated: 2026-09-13
+skills:
+  - name: personal-project-router
+    scope: global
+    source: local
+    status: active
+  - name: personal-memory
+    scope: global
+    source: local
+    status: active
+  - name: math-profile
+    scope: mathematics
+    source: local
+    status: active
+  - name: document-fidelity
+    scope: documents
+    source: local
+    status: active
+  - name: computer-development
+    scope: software
+    source: local
+    status: active
+  - name: find-skills
+    scope: discovery
+    source: host-provided find-skills skill
+    status: optional
+  - name: documents
+    scope: docx
+    source: openai-primary-runtime
+    status: installed
+  - name: pdf
+    scope: pdf
+    source: openai-primary-runtime
+    status: installed
+  - name: presentations
+    scope: slides
+    source: openai-primary-runtime
+    status: installed
+  - name: spreadsheets
+    scope: spreadsheets
+    source: openai-primary-runtime
+    status: installed
+  - name: template-creator
+    scope: artifact templates
+    source: openai-primary-runtime
+    status: installed
+  - name: imagegen
+    scope: raster images
+    source: local system
+    status: installed
+  - name: visualize
+    scope: visualizations
+    source: openai-bundled
+    status: installed
+  - name: computer-use
+    scope: Windows UI
+    source: openai-bundled
+    status: installed
