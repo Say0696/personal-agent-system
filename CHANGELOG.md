@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 - 2026-09-13
+
+- Added executable local memory lifecycle management.
+- Added route and installation helpers.
+- Added regression and privacy checks for release readiness.
+- Kept personal memory local-only and the public starter neutral.
+
 ## 0.2.0 - 2026-09-13
 
 - Removed personal example rules from the public repository.

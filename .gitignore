@@ -2,4 +2,6 @@
 memory/rules.yaml
 memory/local/
 .personal-agent-local/
+scripts/__pycache__/
+tests/__pycache__/
 

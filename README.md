@@ -13,10 +13,28 @@ A personal, evolving skill system for Codex: route each project task through a l
 - `memory/rules.example.yaml` — empty schema for user-specific local rules. Personal records are deliberately excluded from this repository.
 - `scripts/memory_cli.py` — local-only memory capture, listing, and status changes.
 - `scripts/privacy_check.py` — staged-tree check before a public push.
+- `scripts/route.py` — read-only task classification and local skill/memory routing.
+- `scripts/install.ps1`, `scripts/update.ps1`, `scripts/uninstall.ps1` — Windows lifecycle helpers.
+- `scripts/route.py` — read-only project preflight and domain skill router.
+- `scripts/install.ps1` / `update.ps1` / `uninstall.ps1` — install, backup-and-update, and remove skills.
+
+## Install and route
+
+From PowerShell in the repository:
+
+```powershell
+.\scripts\install.ps1
+python .\scripts\route.py "Create a mathematics worksheet"
+python .\scripts\route.py --json "Fix the code and run tests"
+```
+
+The installer copies generic skills and creates a blank local memory file at `$CODEX_HOME/personal-agent-system/memory/rules.yaml` without overwriting an existing one. The router is read-only: it never installs skills, changes memory, or publishes content. `update.ps1` backs up installed skills before updating; `uninstall.ps1` removes only skills recorded in its manifest and preserves personal memory.
 
 ## Installation
 
 Copy the skill directories you want into your Codex skills directory, normally `%USERPROFILE%\\.codex\\skills`. Add the repository's generic `AGENTS.md` to the project where you use it. Keep your personal global protocol and memory overlay outside this public repository.
+
+Install Python dependencies for the local scripts with `python -m pip install -r requirements.txt`. Install `requirements-dev.txt` when running the test suite.
 
 The router remains implicitly discoverable when the host supports implicit selection. It does not replace the host's skill selection or override system, developer, user, or project instructions.
 

@@ -30,3 +30,9 @@ Run the staged-tree privacy check before pushing:
 ```powershell
 python scripts/privacy_check.py
 ```
+
+For a full local check after installing `requirements-dev.txt`, run:
+
+```powershell
+.\scripts\check.ps1
+```

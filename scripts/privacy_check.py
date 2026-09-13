@@ -8,8 +8,12 @@ import sys
 
 def main() -> int:
     files = subprocess.check_output(["git", "diff", "--cached", "--name-only"], text=True).splitlines()
-    bad_names = {"memory/rules.yaml"}
-    bad_patterns = [re.compile(r"[A-Za-z]:[\\/]Users[\\/]", re.I), re.compile(r"gho_[A-Za-z0-9_\-]{20,}")]
+    bad_names = {"memory/rules.yaml", ".env", ".env.local", ".env.production"}
+    bad_patterns = [
+        re.compile(r"[A-Za-z]:[\\/]Users[\\/]", re.I),
+        re.compile(r"gho_[A-Za-z0-9_\-]{20,}"),
+        re.compile(r"(?:api[_-]?key|secret|token)\s*[:=]\s*['\"]?[A-Za-z0-9_\-]{20,}", re.I),
+    ]
     problems = []
     for name in files:
         if name.replace("\\", "/") in bad_names:
