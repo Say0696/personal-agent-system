@@ -1,7 +1,21 @@
-# Memory records
+# Local memory CLI
 
-This directory contains the public schema only. User-specific records belong in a local-only `rules.yaml`, which is ignored by Git. The router should retrieve records matching the current task scope; records are not a transcript and are not a substitute for current project inspection.
+The manager operates on a user-local `rules.yaml` (default: `%CODEX_HOME%/personal-agent-system/memory/rules.yaml`, or `%USERPROFILE%/.codex/...`). It never uploads that file. Every mutation atomically replaces the file and creates a timestamped copy under `memory/backups/` beside it.
 
-Start from `rules.example.yaml`. Keep the personal file under the local Codex home (for example `%USERPROFILE%\\.codex\\personal-agent-system\\memory\\rules.yaml`) or another ignored local directory. Never upload that file to the public repository.
+```powershell
+python scripts/memory_cli.py add --scope math --rule "..." --evidence "..." --owner math-profile
+python scripts/memory_cli.py search "keyword" --scope math
+python scripts/memory_cli.py validate                 # schema check
+python scripts/memory_cli.py validate RULE_ID --note "representative check"
+python scripts/memory_cli.py apply RULE_ID --owner skill-name --change-ref "commit or file"
+python scripts/memory_cli.py rollback RULE_ID --reason "new evidence"
+python scripts/memory_cli.py list --status applied
+```
 
-Use the lifecycle from `skills/personal-memory/SKILL.md`: capture as `candidate`, validate with a representative check, apply to one durable owner, and supersede or roll back when evidence changes.
+Rules are deduplicated by normalized scope and exact rule text. Status transitions are guarded; use `--force` only for repairing imported data. Required fields and duplicate IDs/rules are checked before reading or writing.
+
+Run the dependency-free tests with:
+
+```powershell
+python tests/test_memory_cli.py
+```

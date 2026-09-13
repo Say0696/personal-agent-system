@@ -40,6 +40,17 @@ python .\scripts\route.py --json "修复代码并运行测试"
 
 运行本地脚本前安装依赖：`python -m pip install -r requirements.txt`；运行测试则安装 `requirements-dev.txt`。
 
+常用命令：
+
+```powershell
+python scripts/route.py --json "创建数学练习题"
+python scripts/memory_cli.py add --scope mathematics --rule "规则内容" --evidence "证据"
+python scripts/memory_cli.py list --scope mathematics
+python scripts/memory_cli.py validate <id> --note "代表性检查"
+python scripts/memory_cli.py apply <id> --owner math-profile --change-ref "skill:..."
+python scripts/memory_cli.py rollback <id> --reason "规则已不再适用"
+```
+
 ## 核心原则
 
 - 先查本地 Skill；本地没有合适的再搜索 GitHub/skills.sh。

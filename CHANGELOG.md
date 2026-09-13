@@ -6,6 +6,7 @@
 - Added route and installation helpers.
 - Added regression and privacy checks for release readiness.
 - Kept personal memory local-only and the public starter neutral.
+- Added duplicate detection, schema validation, backups, search, and controlled status transitions.
 
 ## 0.2.0 - 2026-09-13
 

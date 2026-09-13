@@ -86,21 +86,21 @@ def cmd_validate(a):
     d=load(a.file)
     if a.id:
         r=_record(d,a.id)
-        if r.get("status")!="candidate" and not a.force: raise ValueError(f"only candidate records can be validated (current: {r.get('status')})")
-        _set_status(d,a.id,"validated",force=a.force,validation=a.note); save(a.file,d); print(f"{a.id}\tvalidated")
+        if r.get("status")!="candidate" and not getattr(a,"force",False): raise ValueError(f"only candidate records can be validated (current: {r.get('status')})")
+        _set_status(d,a.id,"validated",force=getattr(a,"force",False),validation=a.note); save(a.file,d); print(f"{a.id}\tvalidated")
     else: print(f"valid\t{len(d['records'])} record(s)")
     return 0
 def cmd_apply(a):
     d=load(a.file); r=_record(d,a.id)
-    if r.get("status")!="validated" and not a.force: raise ValueError(f"only validated records can be applied (current: {r.get('status')})")
-    if not a.owner and r.get("owner") in (None,"","unassigned") and not a.force: raise ValueError("apply requires --owner (the durable owner of this rule)")
-    r=_set_status(d,a.id,"applied",force=a.force,owner=a.owner,change_ref=a.change_ref); save(a.file,d); print(f"{r['id']}\tapplied\t{r.get('owner')}"); return 0
+    if r.get("status")!="validated" and not getattr(a,"force",False): raise ValueError(f"only validated records can be applied (current: {r.get('status')})")
+    if not a.owner and r.get("owner") in (None,"","unassigned") and not getattr(a,"force",False): raise ValueError("apply requires --owner (the durable owner of this rule)")
+    r=_set_status(d,a.id,"applied",force=getattr(a,"force",False),owner=a.owner,change_ref=a.change_ref); save(a.file,d); print(f"{r['id']}\tapplied\t{r.get('owner')}"); return 0
 def cmd_rollback(a):
     d=load(a.file); r=_record(d,a.id)
-    if r.get("status") not in {"applied","validated"} and not a.force: raise ValueError(f"cannot roll back status {r.get('status')}")
-    r=_set_status(d,a.id,"rolled_back",force=a.force,rollback_reason=a.reason); save(a.file,d); print(f"{r['id']}\trolled_back"); return 0
+    if r.get("status") not in {"applied","validated"} and not getattr(a,"force",False): raise ValueError(f"cannot roll back status {r.get('status')}")
+    r=_set_status(d,a.id,"rolled_back",force=getattr(a,"force",False),rollback_reason=a.reason); save(a.file,d); print(f"{r['id']}\trolled_back"); return 0
 def cmd_status(a):
-    d=load(a.file); _set_status(d,a.id,a.new_status,force=a.force); save(a.file,d); print(f"{a.id}\t{a.new_status}"); return 0
+    d=load(a.file); _set_status(d,a.id,a.new_status,force=getattr(a,"force",False)); save(a.file,d); print(f"{a.id}\t{a.new_status}"); return 0
 def build_parser():
     p=argparse.ArgumentParser(description="Manage local personal-agent memory"); p.add_argument("--file",type=Path,default=default_path()); s=p.add_subparsers(dest="command",required=True)
     x=s.add_parser("add"); x.add_argument("--scope",required=True); x.add_argument("--rule",required=True); x.add_argument("--evidence",required=True); x.add_argument("--owner"); x.add_argument("--examples",nargs="*"); x.add_argument("--id"); x.set_defaults(func=cmd_add)

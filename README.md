@@ -36,6 +36,17 @@ Copy the skill directories you want into your Codex skills directory, normally `
 
 Install Python dependencies for the local scripts with `python -m pip install -r requirements.txt`. Install `requirements-dev.txt` when running the test suite.
 
+Useful commands:
+
+```powershell
+python scripts/route.py --json "create a math worksheet"
+python scripts/memory_cli.py add --scope mathematics --rule "..." --evidence "..."
+python scripts/memory_cli.py list --scope mathematics
+python scripts/memory_cli.py validate <id> --note "representative check"
+python scripts/memory_cli.py apply <id> --owner math-profile --change-ref "skill:..."
+python scripts/memory_cli.py rollback <id> --reason "no longer correct"
+```
+
 The router remains implicitly discoverable when the host supports implicit selection. It does not replace the host's skill selection or override system, developer, user, or project instructions.
 
 ## Growth model
