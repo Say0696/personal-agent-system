@@ -1,6 +1,6 @@
 # Local memory CLI
 
-The manager operates on a user-local Skill overlay `rules.yaml` (default: `%CODEX_HOME%/personal-agent-system/memory/rules.yaml`, or `%USERPROFILE%/.codex/...`). It never uploads that file. Ordinary task and domain lessons belong here by default. Important, permanent, cross-project facts belong in the user's persistent `MEMORY.md` only after explicit confirmation; this CLI does not write that file implicitly. Every mutation atomically replaces the local file and creates a timestamped copy under `memory/backups/` beside it.
+The manager operates on a user-local Skill overlay `rules.yaml` (default: `%CODEX_HOME%/personal-agent-system/memory/rules.yaml`, or `%USERPROFILE%/.codex/...`). The record's `owner` identifies the Skill that owns the lesson. It never uploads that file. Ordinary task and domain lessons belong here by default. Important, permanent, cross-project facts belong in the user's persistent `MEMORY.md` only after explicit confirmation; this CLI does not write that file implicitly. Every mutation atomically replaces the local file and creates a timestamped copy under `memory/backups/` beside it.
 
 ```powershell
 python scripts/memory_cli.py add --scope math --rule "..." --evidence "..." --owner math-profile

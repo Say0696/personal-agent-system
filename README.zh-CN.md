@@ -3,7 +3,7 @@
 [![许可证：MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![测试](https://img.shields.io/badge/tests-6%20passed-brightgreen.svg)](tests)
 
-一套本地优先、保护隐私的个人 Agent Skill 起始系统。它负责路由项目任务，读取匹配的本地记忆，发现用户自己添加的 Skill，并把经过确认的问题修正沉淀为有作用域的规则，帮助以后类似任务减少重复纠正。
+一套本地优先、保护隐私的个人 Agent Skill 起始系统。它负责路由项目任务，读取匹配的 Skill 本地经验，发现用户自己添加的 Skill，并把经过确认的问题修正沉淀为有作用域的规则，帮助以后类似任务减少重复纠正。
 
 这个仓库有意保持领域无关。公开仓库只提供两个通用核心 Skill；数学、编程、写作、视频、科研或其他领域的 Skill，都由用户在需要时保存在本机。
 

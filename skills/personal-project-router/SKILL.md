@@ -7,6 +7,12 @@ description: Route project tasks through a personal skill and memory check befor
 
 Use this as the first preflight for a project task. Keep the preflight brief and do not repeat it for every shell command. Retrieve user-specific rules from the local memory overlay; this public repository contains no personal rules.
 
+## Invocation contract
+
+For every multi-step project task, invoke this router before implementation. It is the user's default entrypoint for project work. Do not invoke it for casual conversation, a trivial factual answer, or a one-step request unless the user explicitly asks for a full preflight.
+
+The router must check, in order: current project instructions and state, locally available Skills, matching Skill-local lessons, and only then external Skill sources. It must not pretend a Skill or rule exists when it was not found.
+
 ## Preflight
 
 1. Classify the request: casual, one-step, or project task.
@@ -39,6 +45,17 @@ After reporting the result, use a short prompt such as:
 If the user chooses Skill-local storage, create a local `candidate` record under the matching Skill overlay with the minimum evidence. If the user explicitly chooses persistent memory, write only the concise important fact to the user's `MEMORY.md` workflow after confirmation. If the user chooses `仅本次任务` or `不保存`, do not write durable memory. Never infer consent from silence, a correction alone, or the fact that a rule seems useful.
 
 Before any public push, check that local memory files, private paths, credentials, and raw transcripts are absent from the staged tree.
+
+## Storage decision
+
+At task completion, classify any new lesson before saving:
+
+- ordinary task or domain lesson -> the matching Skill's private local overlay (default);
+- important, permanent, cross-project personal information -> persistent `MEMORY.md`, only after explicit confirmation;
+- one-off request -> current task only;
+- unclear or unconfirmed -> do not save.
+
+The Skill-local destination is the normal learning path. Persistent memory is deliberately rare and is never inferred from a correction alone.
 
 ## Domain dispatch
 

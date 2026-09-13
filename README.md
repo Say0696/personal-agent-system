@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-6%20passed-brightgreen.svg)](tests)
 
-A local-first, privacy-preserving starter system for personal Agent Skills. It routes project tasks, retrieves matching local memory, discovers user-added Skills, and turns confirmed corrections into scoped rules that improve future work.
+A local-first, privacy-preserving starter system for personal Agent Skills. It routes project tasks, retrieves matching Skill-local lessons, discovers user-added Skills, and turns confirmed corrections into scoped rules that improve future work.
 
 The repository is intentionally domain-agnostic. It ships two generic core Skills; users add mathematics, coding, writing, video, research, or any other domain locally when needed.
 
