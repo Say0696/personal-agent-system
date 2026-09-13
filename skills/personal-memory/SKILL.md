@@ -37,6 +37,17 @@ Resolve conflicts in this order: current user request, system/developer instruct
 
 Saving a new personal rule requires an explicit user choice at the end of the task. Offer the destination first: matching Skill-local overlay (recommended) or persistent `MEMORY.md` (only for important permanent cross-project information). Then offer scope: current task, current project, similar projects, or all projects. Silence means do not save. Store the narrowest scope the user selects; a later request can widen it. A correction is evidence for a candidate, not automatic permission to create durable memory.
 
+For a completed-project review, separate the results before saving:
+
+| Finding | Default destination |
+| --- | --- |
+| Project-only command, path, or decision | Project `AGENTS.md` or project notes |
+| Reusable method for similar work | Matching Skill-local overlay |
+| Important permanent cross-project personal information | Persistent `MEMORY.md`, explicit confirmation required |
+| One-off detail or unsupported inference | Do not save |
+
+The owner of a Skill-local rule is the Skill that will use it, not automatically `personal-project-router`. If no owner fits, keep the finding as a candidate and propose a new local Skill.
+
 Do not store secrets, raw transcripts, private payloads, or unverified guesses. Keep project facts scoped to the project. When evidence is insufficient, use `open-question` rather than pretending to remember. Never commit or upload the user's local memory file; public releases contain only the empty schema and generic lifecycle.
 
 For repeatable Skill-local operations, use `scripts/memory_cli.py` with a user-local `--file` path. The public repository ships the manager and schema, not personal records. Do not use the CLI to write persistent `MEMORY.md` unless the user explicitly requested that destination and the format has been checked first.

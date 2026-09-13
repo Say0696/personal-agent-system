@@ -57,6 +57,17 @@ At task completion, classify any new lesson before saving:
 
 The Skill-local destination is the normal learning path. Persistent memory is deliberately rare and is never inferred from a correction alone.
 
+## Completed-project retrospective
+
+When the user asks to add a completed project's experience to memory, do not save the whole project or choose an owner silently. First classify each finding:
+
+1. project-only fact or command -> the project's `AGENTS.md` or project notes;
+2. reusable method for similar work -> the matching domain Skill's private overlay, with that Skill recorded as `owner`;
+3. important permanent cross-project personal information -> a concise entry in persistent `MEMORY.md`, after explicit confirmation;
+4. one-off detail or unsupported inference -> do not save.
+
+Show the proposed classification, destination, scope, evidence, and owner before writing. If no matching Skill exists, recommend creating a local Skill or keep the finding as a candidate; do not force it into the router or memory. Ask the user to approve each destination or a clearly grouped set.
+
 ## Domain dispatch
 
 - Any domain: read the matching user-created Skill and local profile when available.

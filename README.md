@@ -85,6 +85,16 @@ candidate -> validated -> applied
 
 Validation requires a note and evidence file or SHA-256 digest. Writes are backed up and replaced atomically. `export` is explicit because exported memory may contain private preferences.
 
+### Import experience from a completed project
+
+Ask the system to review the project before saving anything:
+
+```text
+整理项目 <name> 的经验。请区分项目专属信息、同类任务可复用的 Skill 规则，以及真正重要且跨项目的个人信息。先列出建议的保存位置、作用范围、证据和负责人，不要直接保存。
+```
+
+The default destinations are project notes for project-only facts, the matching Skill's private overlay for reusable methods, and persistent `MEMORY.md` only for explicitly confirmed important cross-project information. Unsupported inferences and one-off details are discarded.
+
 ## Add a domain Skill locally
 
 Create a local directory with a concise `SKILL.md`:
