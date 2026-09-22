@@ -14,6 +14,10 @@ python desktop_ear.py
 
 按 Ctrl+Shift+Space 开始和结束录音，也可以点击窗口按钮。录音保存在 data/recordings。
 
+## 直接点击运行
+
+打包版本位于 `dist/DesktopEar.exe`，双击即可打开，不需要先打开 PowerShell。首次运行时 Windows 可能询问麦克风权限，请允许。
+
 ## 当前边界
 
 - 不持续上传录音。

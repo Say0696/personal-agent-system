@@ -1,6 +1,7 @@
 from pathlib import Path
 import datetime as dt
 import os
+import sys
 import queue
 import threading
 import wave
@@ -10,7 +11,7 @@ import numpy as np
 import sounddevice as sd
 from pynput import keyboard
 
-APP_DIR = Path(__file__).resolve().parent
+APP_DIR = Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parent
 RECORDINGS_DIR = APP_DIR / 'data' / 'recordings'
 RATE = int(os.getenv('DESKTOP_EAR_SAMPLE_RATE', '16000'))
 HOTKEY = os.getenv('DESKTOP_EAR_HOTKEY', '<ctrl>+<shift>+<space>')

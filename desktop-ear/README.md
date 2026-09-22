@@ -11,3 +11,5 @@ python desktop_ear.py
 ```
 
 This version does not connect to a model API, automate WeChat, or execute commands.
+
+The packaged click-to-run build is `dist/DesktopEar.exe`. Windows may ask for microphone permission on first use.

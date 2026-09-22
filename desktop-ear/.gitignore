@@ -3,3 +3,6 @@ data/recordings/*.txt
 *.wav
 .venv/
 __pycache__/
+build/
+dist/
+*.spec
