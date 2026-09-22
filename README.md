@@ -162,3 +162,7 @@ No. Local memory updates and public repository updates are separate. Publish onl
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Desktop Ear
+
+仓库内新增了一个独立的 Windows 本地入口原型：`desktop-ear`。它先验证“全局快捷键 → 本地录音”的基础链路，默认不连接模型、不操作微信、不持续上传音频。详见 [desktop-ear/README.zh-CN.md](desktop-ear/README.zh-CN.md)。

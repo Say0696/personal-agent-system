@@ -1,0 +1,5 @@
+data/recordings/
+*.wav
+*.txt
+.venv/
+__pycache__/
