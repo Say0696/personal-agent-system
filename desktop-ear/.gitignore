@@ -4,6 +4,7 @@ data/recordings/*.txt
 .venv/
 __pycache__/
 build/
-dist/
+dist/*
+!dist/DesktopEar.exe
 *.spec
 %SystemDrive%/
